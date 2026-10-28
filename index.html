@@ -280,6 +280,37 @@ function updateButton() {
   $("analyse").disabled = !currentUser || !model || !frontImage || !sideImage;
 }
 
+async function uploadPhotoToSupabase(file, view) {
+  if (!currentUser) {
+    throw new Error("Please sign in before uploading photos.");
+  }
+
+  if (!file) {
+    throw new Error("Please select both photos.");
+  }
+
+  const extension = (
+    file.name.split(".").pop() || "jpg"
+  ).toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+
+  // Store each photo inside its owner's private folder.
+  const filePath =
+    `${currentUser.id}/${crypto.randomUUID()}-${view}.${extension}`;
+
+  const { data, error } = await supabase.storage
+    .from("posture-photos")
+    .upload(filePath, file, {
+      contentType: file.type,
+      upsert: false
+    });
+
+  if (error) {
+    throw error;
+  }
+
+  return data.path;
+}
+
 function loadPhoto(file, view) {
   if (!file) return;
   if (!file.type.startsWith("image/")) {
@@ -439,24 +470,57 @@ function analyseSide(img) {
 $("frontPhoto").addEventListener("change", e => loadPhoto(e.target.files[0], "front"));
 $("sidePhoto").addEventListener("change", e => loadPhoto(e.target.files[0], "side"));
 
-$("analyse").addEventListener("click", () => {
+
+$("analyse").addEventListener("click", async () => {
   if (!currentUser) {
-    showAccountStatus("Please sign in or create an account before analysing.");
+    showAccountStatus("Please sign in before uploading photos.");
     updateButton();
     return;
   }
+
   if (!model || !frontImage || !sideImage) return;
+
+  const frontFile = $("frontPhoto").files[0];
+  const sideFile = $("sidePhoto").files[0];
+
+  if (!frontFile || !sideFile) {
+    $("status").textContent =
+      "Please select both photos again before uploading.";
+    return;
+  }
+
   $("analyse").disabled = true;
-  $("results").replaceChildren();
-  $("status").textContent = "Analysing photos...";
+  $("status").textContent = "Saving your photos securely...";
+
   try {
+    const frontPath = await uploadPhotoToSupabase(
+      frontFile, "front"
+    );
+
+    const sidePath = await uploadPhotoToSupabase(
+      sideFile, "side"
+    );
+
+    console.log("Front photo saved:", frontPath);
+    console.log("Side photo saved:", sidePath);
+
+    $("results").replaceChildren();
+    $("status").textContent = "Photos saved. Analysing...";
+
     analyseFront(frontImage);
     analyseSide(sideImage);
-    $("reportDate").textContent = "Generated: " + new Date().toLocaleString();
-    $("status").textContent = "Analysis complete. Review the report and image overlays.";
+
+    $("reportDate").textContent =
+      "Generated: " + new Date().toLocaleString();
+
+    $("status").textContent =
+      "Analysis complete. Photos saved to your account's storage.";
+
   } catch (error) {
-    console.error("Analysis error:", error);
-    $("status").textContent = "Analysis failed. Check the browser console for details.";
+    console.error("Photo upload or analysis failed:", error);
+
+    $("status").textContent =
+      "Could not save or analyse the photos: " + error.message;
   } finally {
     updateButton();
   }
