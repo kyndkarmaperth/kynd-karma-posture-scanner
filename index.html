@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,78 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kynd Karma | Posture Screening</title>
 <style>
-:root {
-  --green: #496653;
-  --cream: #f6f3ed;
-  --text: #344b40;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0; padding: 24px 14px;
-  background: var(--cream); color: var(--text);
-  font-family: Arial, sans-serif;
-}
-main { max-width: 1050px; margin: auto; }
-header, section, .photo-card {
-  background: white; border-radius: 14px;
-  padding: 22px; margin-bottom: 18px;
-}
-h1 { margin-bottom: 8px; }
-h2 { font-size: 21px; }
-p { line-height: 1.55; }
-.brand { letter-spacing: 2px; font-size: 12px; }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 18px;
-}
-.photo-card { margin: 0; min-width: 0; }
-input, select { max-width: 100%; padding: 8px; }
-canvas {
-  display: block; width: 100%; height: auto;
-  margin-top: 14px; background: #f4f4f0;
-  border-radius: 8px;
-}
-button {
-  border: 0; border-radius: 8px;
-  background: var(--green); color: white;
-  padding: 13px 18px; font-size: 15px;
-  cursor: pointer; margin: 5px 5px 5px 0;
-}
-button:disabled { opacity: .5; cursor: wait; }
-.secondary { background: #e8eee8; color: var(--text); }
-.notice {
-  padding: 13px; border-radius: 8px;
-  background: var(--cream); font-size: 14px;
-}
-#status { font-weight: bold; margin: 14px 0; }
-.metric {
-  border: 1px solid #e0e5df;
-  border-radius: 8px; padding: 13px; margin: 10px 0;
-}
-.small { font-size: 13px; color: #596b60; }
-@media(max-width:650px) {
-  .grid { grid-template-columns: 1fr; }
-  header, section, .photo-card { padding: 16px; }
-}
+:root { --green:#496653; --cream:#f6f3ed; --text:#344b40; }
+* { box-sizing:border-box; }
+body { margin:0; padding:24px 14px; background:var(--cream); color:var(--text); font-family:Arial,sans-serif; }
+main { max-width:1050px; margin:auto; }
+header, section, .photo-card { background:white; border-radius:14px; padding:22px; margin-bottom:18px; }
+h1 { margin-bottom:8px; }
+h2 { font-size:21px; }
+p { line-height:1.55; }
+.brand { letter-spacing:2px; font-size:12px; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.photo-card { margin:0; min-width:0; }
+input, select { max-width:100%; padding:8px; }
+canvas { display:block; width:100%; height:auto; margin-top:14px; background:#f4f4f0; border-radius:8px; }
+button { border:0; border-radius:8px; background:var(--green); color:white; padding:13px 18px; font-size:15px; cursor:pointer; margin:5px 5px 5px 0; }
+button:disabled { opacity:.5; cursor:not-allowed; }
+.secondary { background:#e8eee8; color:var(--text); }
+.notice { padding:13px; border-radius:8px; background:var(--cream); font-size:14px; }
+#status { font-weight:bold; margin:14px 0; }
+.metric { border:1px solid #e0e5df; border-radius:8px; padding:13px; margin:10px 0; }
+.small { font-size:13px; color:#596b60; }
+@media(max-width:650px) { .grid { grid-template-columns:1fr; } header, section, .photo-card { padding:16px; } }
 @media print {
-  body { background: white; padding: 0; }
-  header, section, .photo-card {
-    box-shadow: none; border: 1px solid #ddd;
-    break-inside: avoid;
-  }
-  .no-print, input, button, select, label { display: none !important; }
-  .grid { grid-template-columns: 1fr 1fr; }
+  body { background:white; padding:0; }
+  header, section, .photo-card { box-shadow:none; border:1px solid #ddd; break-inside:avoid; }
+  .no-print, input, button, select, label { display:none !important; }
+  .grid { grid-template-columns:1fr 1fr; }
 }
-.report-logo {
-  display: block;
-  max-width: 160px;
-  max-height: 80px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  margin: 0 auto 20px;
-}
+.report-logo { display:block; max-width:160px; max-height:80px; width:auto; height:auto; object-fit:contain; margin:0 auto 20px; }
 </style>
 </head>
 <body>
@@ -96,27 +51,14 @@ button:disabled { opacity: .5; cursor: wait; }
 <section id="accountSection" class="no-print">
   <h2>Your Kynd Karma account</h2>
   <p>Sign in to access your posture assessment account.</p>
-
   <label for="accountEmail">Email address</label><br>
-  <input id="accountEmail" type="email"
-         autocomplete="email" required
-         placeholder="you@example.com"><br><br>
-
+  <input id="accountEmail" type="email" autocomplete="email" required placeholder="you@example.com"><br><br>
   <label for="accountPassword">Password</label><br>
-  <input id="accountPassword" type="password"
-         autocomplete="current-password" required
-         placeholder="Enter your password"><br><br>
-
+  <input id="accountPassword" type="password" autocomplete="current-password" required placeholder="Enter your password"><br><br>
   <button id="signInButton" type="button">Sign in</button>
-  <button id="signUpButton" type="button" class="secondary">
-    Create account
-  </button>
-  <button id="signOutButton" type="button" class="secondary"
-          hidden>Sign out</button>
-
-  <p id="accountStatus" class="notice" role="status">
-    Checking account status...
-  </p>
+  <button id="signUpButton" type="button" class="secondary">Create account</button>
+  <button id="signOutButton" type="button" class="secondary" hidden>Sign out</button>
+  <p id="accountStatus" class="notice" role="status">Checking account status...</p>
 </section>
 
 <section class="no-print">
@@ -138,9 +80,7 @@ button:disabled { opacity: .5; cursor: wait; }
       </select>
     </div>
   </div>
-  <p class="small">Use your own test photos initially. The photos are processed
-  in your browser by this code, but the AI model is downloaded from external
-  servers. This prototype is not yet configured for clinical client data.</p>
+  <p class="small">Use your own test photos initially. Photos are processed in your browser by this code, but the AI model is downloaded from external servers. This prototype does not yet save photos or reports to your account and is not configured for clinical client data.</p>
   <button id="analyse" disabled>Analyse photos</button>
   <button id="clear" class="secondary">Clear photos</button>
   <div id="status" role="status">Loading AI model...</div>
@@ -149,14 +89,8 @@ button:disabled { opacity: .5; cursor: wait; }
 <section>
   <h2>2. Landmark visualisation</h2>
   <div class="grid">
-    <div class="photo-card">
-      <h3>Front view</h3>
-      <canvas id="frontCanvas"></canvas>
-    </div>
-    <div class="photo-card">
-      <h3>Side view</h3>
-      <canvas id="sideCanvas"></canvas>
-    </div>
+    <div class="photo-card"><h3>Front view</h3><canvas id="frontCanvas"></canvas></div>
+    <div class="photo-card"><h3>Side view</h3><canvas id="sideCanvas"></canvas></div>
   </div>
 </section>
 
@@ -165,133 +99,155 @@ button:disabled { opacity: .5; cursor: wait; }
   <h2>3. Screening report</h2>
   <p class="small" id="reportDate">No assessment completed.</p>
   <div id="results">Upload both photos and run the analysis.</div>
-  <div class="no-print">
-    <button id="print">Print / Save report as PDF</button>
-  </div>
-  <p class="notice">
-    Measurements are sensitive to camera position, body rotation, clothing,
-    visibility and AI landmark error. The forward head estimate is a
-    two-dimensional photo measurement, not a cervical angle or diagnosis.
-  </p>
+  <div class="no-print"><button id="print">Print / Save report as PDF</button></div>
+  <p class="notice">Measurements are sensitive to camera position, body rotation, clothing, visibility and AI landmark error. The forward head estimate is a two-dimensional photo measurement, not a cervical angle or diagnosis.</p>
 </section>
 </main>
 
 <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { FilesetResolver, PoseLandmarker } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/vision_bundle.mjs";
 
-const SUPABASE_URL = 'https://iaqonikluodqpxojneyf.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_vpJX3xL3XqFTkqGBFWFlTg_raDkS773';
-
-const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-import {
-  FilesetResolver,
-  PoseLandmarker
-} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/vision_bundle.mjs";
-
+const SUPABASE_URL = "https://iaqonikluodqpxojneyf.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_vpJX3xL3XqFTkqGBFWFlTg_raDkS773";
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 const $ = id => document.getElementById(id);
-  
+
 let currentUser = null;
+let model = null;
+let frontImage = null;
+let sideImage = null;
 
 function showAccountStatus(message) {
   $("accountStatus").textContent = message;
 }
 
+function updateAccountControls() {
+  const signedIn = Boolean(currentUser);
+  $("signInButton").hidden = signedIn;
+  $("signUpButton").hidden = signedIn;
+  $("signOutButton").hidden = !signedIn;
+  $("accountEmail").hidden = signedIn;
+  $("accountPassword").hidden = signedIn;
+  updateButton();
+}
 
 async function refreshAccount() {
   showAccountStatus("Checking account status...");
-
   try {
     const { data, error } = await supabase.auth.getUser();
-
     if (error) {
       console.error("Account check failed:", error);
       currentUser = null;
+      showAccountStatus("Please sign in or create an account.");
     } else {
-      currentUser = data.user;
+      currentUser = data.user ?? null;
+      showAccountStatus(
+        currentUser
+          ? "Signed in as " + currentUser.email
+          : "Please sign in or create an account."
+      );
     }
-
-    $("signInButton").hidden = !!currentUser;
-    $("signUpButton").hidden = !!currentUser;
-    $("signOutButton").hidden = !currentUser;
-    $("accountEmail").hidden = !!currentUser;
-    $("accountPassword").hidden = !!currentUser;
-
-    showAccountStatus(
-      currentUser
-        ? "Signed in as " + currentUser.email
-        : "Please sign in or create an account."
-    );
   } catch (error) {
     console.error("Account check error:", error);
     currentUser = null;
-    showAccountStatus(
-      "Unable to check your account. Please refresh and try again."
-    );
-  } finally {
-    updateButton();
+    showAccountStatus("Unable to check your account. Check your connection and refresh.");
   }
+  updateAccountControls();
 }
 
+$("signUpButton").addEventListener("click", async () => {
+  const email = $("accountEmail").value.trim();
+  const password = $("accountPassword").value;
+  if (!email || !password) {
+    showAccountStatus("Enter your email and password.");
+    return;
+  }
+  if (password.length < 8) {
+    showAccountStatus("Please use a password with at least 8 characters.");
+    return;
+  }
+
+  $("signUpButton").disabled = true;
+  $("signInButton").disabled = true;
+  showAccountStatus("Creating your account...");
+  try {
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) {
+      showAccountStatus("Account creation failed: " + error.message);
+    } else if (data.session && data.user) {
+      currentUser = data.user;
+      updateAccountControls();
+      showAccountStatus("Account created and signed in as " + data.user.email);
+    } else {
+      showAccountStatus("Account request received. Check your email to confirm your account, then sign in.");
+    }
+  } catch (error) {
+    console.error("Sign-up error:", error);
+    showAccountStatus("Could not contact the sign-up service. Check your connection and try again.");
+  } finally {
+    $("signUpButton").disabled = false;
+    $("signInButton").disabled = false;
+  }
+});
 
 $("signInButton").addEventListener("click", async () => {
   const email = $("accountEmail").value.trim();
   const password = $("accountPassword").value;
-
   if (!email || !password) {
     showAccountStatus("Enter your email and password.");
     return;
   }
 
+  $("signInButton").disabled = true;
+  $("signUpButton").disabled = true;
   showAccountStatus("Signing in...");
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  if (error) {
-    showAccountStatus("Sign-in failed: " + error.message);
-    return;
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      showAccountStatus("Sign-in failed: " + error.message);
+      return;
+    }
+    currentUser = data.user ?? null;
+    updateAccountControls();
+    showAccountStatus(currentUser ? "Signed in as " + currentUser.email : "Signed in. You can continue.");
+  } catch (error) {
+    console.error("Sign-in error:", error);
+    showAccountStatus("Could not contact the sign-in service. Check your connection and try again.");
+  } finally {
+    $("signInButton").disabled = false;
+    $("signUpButton").disabled = false;
   }
-
-  await refreshAccount();
 });
 
 $("signOutButton").addEventListener("click", async () => {
-  const { error } = await supabase.auth.signOut();
-
-  if (error) {
-    showAccountStatus("Sign-out failed: " + error.message);
-    return;
+  $("signOutButton").disabled = true;
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      showAccountStatus("Sign-out failed: " + error.message);
+      return;
+    }
+    currentUser = null;
+    updateAccountControls();
+    showAccountStatus("You are signed out. Please sign in or create an account.");
+  } catch (error) {
+    console.error("Sign-out error:", error);
+    showAccountStatus("Could not sign out. Please try again.");
+  } finally {
+    $("signOutButton").disabled = false;
   }
-
-  await refreshAccount();
 });
 
 supabase.auth.onAuthStateChange((_event, session) => {
   currentUser = session?.user ?? null;
-
-  $("signInButton").hidden = !!currentUser;
-  $("signUpButton").hidden = !!currentUser;
-  $("signOutButton").hidden = !currentUser;
-  $("accountEmail").hidden = !!currentUser;
-  $("accountPassword").hidden = !!currentUser;
-
+  updateAccountControls();
   showAccountStatus(
     currentUser
       ? "Signed in as " + currentUser.email
       : "Please sign in or create an account."
   );
-  
-  updateButton();
 });
-
-let model = null;
-let frontImage = null;
-let sideImage = null;
 
 const connections = [
   [7,8], [11,12], [11,13], [13,15], [12,14], [14,16],
@@ -307,29 +263,21 @@ async function loadModel() {
     );
     model = await PoseLandmarker.createFromOptions(vision, {
       baseOptions: {
-        modelAssetPath:
-          "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task"
+        modelAssetPath: "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task"
       },
       runningMode: "IMAGE",
       numPoses: 1
     });
-    $("status").textContent = "Model ready. Select both photos.";
+    $("status").textContent = "Model ready. Sign in and select both photos.";
     updateButton();
-  } catch (e) {
-    console.error(e);
-    $("status").textContent =
-      "Could not load model. Check your internet connection and refresh.";
+  } catch (error) {
+    console.error("Model load error:", error);
+    $("status").textContent = "Could not load model. Check your internet connection and refresh.";
   }
 }
 
 function updateButton() {
-  $("analyse").disabled =
-    !currentUser ||
-    !model ||
-    !frontImage ||
-    !sideImage;
-}
-  $("analyse").disabled = !(model && frontImage && sideImage);
+  $("analyse").disabled = !currentUser || !model || !frontImage || !sideImage;
 }
 
 function loadPhoto(file, view) {
@@ -342,7 +290,6 @@ function loadPhoto(file, view) {
     $("status").textContent = "Please choose an image smaller than 15 MB.";
     return;
   }
-
   const reader = new FileReader();
   reader.onload = () => {
     const img = new Image();
@@ -350,15 +297,14 @@ function loadPhoto(file, view) {
       if (view === "front") frontImage = img;
       else sideImage = img;
       drawOriginal(img, $(view + "Canvas"));
-      $("results").textContent =
-        "Photos loaded. Select Analyse photos.";
+      $("results").textContent = "Photos loaded. Sign in and select Analyse photos.";
+      $("status").textContent = "Photo loaded.";
       updateButton();
     };
-    img.onerror = () => {
-      $("status").textContent = "Could not read that image.";
-    };
+    img.onerror = () => { $("status").textContent = "Could not read that image."; };
     img.src = reader.result;
   };
+  reader.onerror = () => { $("status").textContent = "Could not read that image."; };
   reader.readAsDataURL(file);
 }
 
@@ -369,18 +315,14 @@ function drawOriginal(img, canvas) {
   canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
 }
 
-function visible(p) {
-  return p && (p.visibility ?? 1) >= 0.5;
-}
+function visible(p) { return p && (p.visibility ?? 1) >= 0.5; }
 
 function drawPose(img, canvas, points, isSide) {
   drawOriginal(img, canvas);
   const ctx = canvas.getContext("2d");
   const w = canvas.width, h = canvas.height;
-
   ctx.lineWidth = Math.max(2, w / 350);
   ctx.strokeStyle = "#209b70";
-
   for (const [a, b] of connections) {
     if (!visible(points[a]) || !visible(points[b])) continue;
     ctx.beginPath();
@@ -388,7 +330,6 @@ function drawPose(img, canvas, points, isSide) {
     ctx.lineTo(points[b].x * w, points[b].y * h);
     ctx.stroke();
   }
-
   for (const p of points) {
     if (!visible(p)) continue;
     ctx.beginPath();
@@ -396,12 +337,10 @@ function drawPose(img, canvas, points, isSide) {
     ctx.fillStyle = "#e6a34b";
     ctx.fill();
   }
-
   if (isSide) {
     const ear = bestPoint(points, [7, 8]);
     const shoulder = bestPoint(points, [11, 12]);
     const hip = bestPoint(points, [23, 24]);
-
     if (ear && shoulder && hip) {
       ctx.strokeStyle = "#c05252";
       ctx.lineWidth = Math.max(2, w / 250);
@@ -417,9 +356,7 @@ function drawPose(img, canvas, points, isSide) {
 function bestPoint(points, ids) {
   const candidates = ids.map(i => points[i]).filter(visible);
   if (!candidates.length) return null;
-  return candidates.sort(
-    (a, b) => (b.visibility ?? 1) - (a.visibility ?? 1)
-  )[0];
+  return candidates.sort((a, b) => (b.visibility ?? 1) - (a.visibility ?? 1))[0];
 }
 
 function addMetric(title, text) {
@@ -440,24 +377,19 @@ function comparePair(points, aId, bId, name) {
     return;
   }
   const difference = (b.y - a.y) * 100;
-  addMetric(name,
-    Math.abs(difference).toFixed(2) +
-    "% of image height between detected points vertically. " +
-    "This is not a validated anatomical alignment measurement."
-  );
+  addMetric(name, Math.abs(difference).toFixed(2) +
+    "% of image height between detected points vertically. This is not a validated anatomical alignment measurement.");
 }
 
 function analyseFront(img) {
   const canvas = $("frontCanvas");
   const result = model.detect(img);
   const points = result.landmarks?.[0];
-
   if (!points) {
     drawOriginal(img, canvas);
     addMetric("Front view", "No pose detected. Retake the photo.");
     return;
   }
-
   drawPose(img, canvas, points, false);
   addMetric("Front view", "Landmarks detected. Check the overlay visually.");
   comparePair(points, 11, 12, "Shoulder image-level comparison");
@@ -468,110 +400,63 @@ function analyseSide(img) {
   const canvas = $("sideCanvas");
   const result = model.detect(img);
   const points = result.landmarks?.[0];
-
   if (!points) {
     drawOriginal(img, canvas);
     addMetric("Side view", "No pose detected. Retake the photo.");
     return;
   }
-
   drawPose(img, canvas, points, true);
-
-  // The model provides ear, shoulder and hip landmarks.
-  // The side-facing direction is supplied by the user.
   const ear = bestPoint(points, [7, 8]);
   const shoulder = bestPoint(points, [11, 12]);
   const hip = bestPoint(points, [23, 24]);
-
   if (!ear || !shoulder || !hip) {
-    addMetric(
-      "Forward head posture estimate",
-      "Unable to estimate: the ear, shoulder or hip landmark is not " +
-      "visible with sufficient confidence. Retake the side photo with " +
-      "the ear and shoulder clearly visible."
-    );
+    addMetric("Forward head posture estimate", "Unable to estimate: the ear, shoulder or hip landmark is not visible with sufficient confidence. Retake the side photo with the ear and shoulder clearly visible.");
     return;
   }
-
-  const torsoLength = Math.hypot(
-    (hip.x - shoulder.x) * canvas.width,
-    (hip.y - shoulder.y) * canvas.height
-  );
-
+  const torsoLength = Math.hypot((hip.x - shoulder.x) * canvas.width, (hip.y - shoulder.y) * canvas.height);
   if (torsoLength < 1) {
     addMetric("Forward head posture estimate", "Unable to calculate.");
     return;
   }
-
-  // Positive means the ear is further forward than the shoulder
-  // in the declared direction of facing.
   const direction = $("facing").value === "right" ? 1 : -1;
-  const forwardPixels =
-    direction * (ear.x - shoulder.x) * canvas.width;
-
+  const forwardPixels = direction * (ear.x - shoulder.x) * canvas.width;
   const percent = 100 * forwardPixels / torsoLength;
-  const percentText = percent.toFixed(1) + "%";
-
-  // Estimate only: no validated threshold is applied.
-  addMetric(
-    "Forward head offset (photo estimate)",
-    "The ear landmark is " + percentText +
-    " of the shoulder-to-hip landmark distance forward of the shoulder " +
-    "in the image plane. " +
-    (percent > 0
-      ? "The ear appears forward of the shoulder landmark."
-      : percent < 0
-        ? "The ear appears behind the shoulder landmark."
-        : "The ear and shoulder landmarks are horizontally aligned.") +
-    " This is a two-dimensional positional estimate, not a cervical " +
-    "angle, and it does not classify the posture as normal or abnormal."
-  );
-
-  addMetric(
-    "Landmark confidence",
+  addMetric("Forward head offset (photo estimate)",
+    "The ear landmark is " + percent.toFixed(1) +
+    "% of the shoulder-to-hip landmark distance forward of the shoulder in the image plane. " +
+    (percent > 0 ? "The ear appears forward of the shoulder landmark." :
+      percent < 0 ? "The ear appears behind the shoulder landmark." :
+      "The ear and shoulder landmarks are horizontally aligned.") +
+    " This is a two-dimensional positional estimate, not a cervical angle, and it does not classify the posture as normal or abnormal.");
+  addMetric("Landmark confidence",
     "Ear visibility: " + Math.round((ear.visibility ?? 1) * 100) +
-    "%; shoulder visibility: " +
-    Math.round((shoulder.visibility ?? 1) * 100) +
-    "%. Confidence scores do not establish measurement accuracy."
-  );
-
-  addMetric(
-    "Interpretation",
-    "Review the original image and overlay. Camera perspective, head " +
-    "rotation, body rotation and landmark errors may change this result. " +
-    "Confirm posture with an appropriate clinical assessment."
-  );
+    "%; shoulder visibility: " + Math.round((shoulder.visibility ?? 1) * 100) +
+    "%. Confidence scores do not establish measurement accuracy.");
+  addMetric("Interpretation",
+    "Review the original image and overlay. Camera perspective, head rotation, body rotation and landmark errors may change this result. Confirm posture with an appropriate clinical assessment.");
 }
 
-$("frontPhoto").addEventListener("change", e =>
-  loadPhoto(e.target.files[0], "front")
-);
-$("sidePhoto").addEventListener("change", e =>
-  loadPhoto(e.target.files[0], "side")
-);
+$("frontPhoto").addEventListener("change", e => loadPhoto(e.target.files[0], "front"));
+$("sidePhoto").addEventListener("change", e => loadPhoto(e.target.files[0], "side"));
 
 $("analyse").addEventListener("click", () => {
   if (!currentUser) {
     showAccountStatus("Please sign in or create an account before analysing.");
+    updateButton();
     return;
   }
-
   if (!model || !frontImage || !sideImage) return;
   $("analyse").disabled = true;
   $("results").replaceChildren();
   $("status").textContent = "Analysing photos...";
-
   try {
     analyseFront(frontImage);
     analyseSide(sideImage);
-    $("reportDate").textContent =
-      "Generated: " + new Date().toLocaleString();
-    $("status").textContent =
-      "Analysis complete. Review the report and image overlays.";
-  } catch (e) {
-    console.error(e);
-    $("status").textContent =
-      "Analysis failed. Check the browser console for details.";
+    $("reportDate").textContent = "Generated: " + new Date().toLocaleString();
+    $("status").textContent = "Analysis complete. Review the report and image overlays.";
+  } catch (error) {
+    console.error("Analysis error:", error);
+    $("status").textContent = "Analysis failed. Check the browser console for details.";
   } finally {
     updateButton();
   }
@@ -582,13 +467,11 @@ $("clear").addEventListener("click", () => {
   sideImage = null;
   $("frontPhoto").value = "";
   $("sidePhoto").value = "";
-
   for (const id of ["frontCanvas", "sideCanvas"]) {
-    const c = $(id);
-    c.width = 0;
-    c.height = 0;
+    const canvas = $(id);
+    canvas.width = 0;
+    canvas.height = 0;
   }
-
   $("results").textContent = "Upload both photos and run the analysis.";
   $("reportDate").textContent = "No assessment completed.";
   $("status").textContent = model ? "Ready for new photos." : "Loading model...";
@@ -597,6 +480,7 @@ $("clear").addEventListener("click", () => {
 
 $("print").addEventListener("click", () => window.print());
 
+updateButton();
 refreshAccount();
 loadModel();
 </script>
