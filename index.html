@@ -93,6 +93,32 @@ button:disabled { opacity: .5; cursor: wait; }
   </div>
 </header>
 
+<section id="accountSection" class="no-print">
+  <h2>Your Kynd Karma account</h2>
+  <p>Sign in to access your posture assessment account.</p>
+
+  <label for="accountEmail">Email address</label><br>
+  <input id="accountEmail" type="email"
+         autocomplete="email" required
+         placeholder="you@example.com"><br><br>
+
+  <label for="accountPassword">Password</label><br>
+  <input id="accountPassword" type="password"
+         autocomplete="current-password" required
+         placeholder="Enter your password"><br><br>
+
+  <button id="signInButton" type="button">Sign in</button>
+  <button id="signUpButton" type="button" class="secondary">
+    Create account
+  </button>
+  <button id="signOutButton" type="button" class="secondary"
+          hidden>Sign out</button>
+
+  <p id="accountStatus" class="notice" role="status">
+    Checking account status...
+  </p>
+</section>
+
 <section class="no-print">
   <h2>1. Upload photographs</h2>
   <p>Use full-body images, with the camera level and your whole body visible.
@@ -153,7 +179,7 @@ button:disabled { opacity: .5; cursor: wait; }
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const SUPABASE_URL = 'https://iaqonikluodqpxojneyf.supabase.co/rest/v1/';
+const SUPABASE_URL = 'https://iaqonikluodqpxojneyf.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_vpJX3xL3XqFTkqGBFWFlTg_raDkS773';
 
 const supabase = createClient(
@@ -166,6 +192,115 @@ import {
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/vision_bundle.mjs";
 
 const $ = id => document.getElementById(id);
+  
+let currentUser = null;
+
+function showAccountStatus(message) {
+  $("accountStatus").textContent = message;
+}
+
+async function refreshAccount() {
+  const { data, error } = await supabase.auth.getUser();
+
+  currentUser = error ? null : data.user;
+
+  $("signInButton").hidden = !!currentUser;
+  $("signUpButton").hidden = !!currentUser;
+  $("signOutButton").hidden = !currentUser;
+  $("accountEmail").hidden = !!currentUser;
+  $("accountPassword").hidden = !!currentUser;
+
+  showAccountStatus(
+    currentUser
+      ? "Signed in as " + currentUser.email
+      : "Please sign in or create an account."
+  );
+}
+
+$("signUpButton").addEventListener("click", async () => {
+  const email = $("accountEmail").value.trim();
+  const password = $("accountPassword").value;
+
+  if (!email || password.length < 8) {
+    showAccountStatus(
+      "Enter your email and a password of at least 8 characters."
+    );
+    return;
+  }
+
+  showAccountStatus("Creating your account...");
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    showAccountStatus("Sign-up failed: " + error.message);
+    return;
+  }
+
+  if (data.session) {
+    await refreshAccount();
+  } else {
+    showAccountStatus(
+      "Account request received. Check your email to confirm " +
+      "your account, then sign in."
+    );
+  }
+});
+
+$("signInButton").addEventListener("click", async () => {
+  const email = $("accountEmail").value.trim();
+  const password = $("accountPassword").value;
+
+  if (!email || !password) {
+    showAccountStatus("Enter your email and password.");
+    return;
+  }
+
+  showAccountStatus("Signing in...");
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    showAccountStatus("Sign-in failed: " + error.message);
+    return;
+  }
+
+  await refreshAccount();
+});
+
+$("signOutButton").addEventListener("click", async () => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    showAccountStatus("Sign-out failed: " + error.message);
+    return;
+  }
+
+  await refreshAccount();
+});
+
+supabase.auth.onAuthStateChange((_event, session) => {
+  currentUser = session?.user ?? null;
+
+  $("signInButton").hidden = !!currentUser;
+  $("signUpButton").hidden = !!currentUser;
+  $("signOutButton").hidden = !currentUser;
+  $("accountEmail").hidden = !!currentUser;
+  $("accountPassword").hidden = !!currentUser;
+
+  showAccountStatus(
+    currentUser
+      ? "Signed in as " + currentUser.email
+      : "Please sign in or create an account."
+  );
+});
+
 let model = null;
 let frontImage = null;
 let sideImage = null;
@@ -463,6 +598,7 @@ $("clear").addEventListener("click", () => {
 
 $("print").addEventListener("click", () => window.print());
 
+refreshAccount();
 loadModel();
 </script>
 </body>
