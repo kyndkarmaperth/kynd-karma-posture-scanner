@@ -215,6 +215,8 @@ async function refreshAccount() {
       ? "Signed in as " + currentUser.email
       : "Please sign in or create an account."
   );
+  
+  updateButton();
 }
 
 $("signUpButton").addEventListener("click", async () => {
@@ -299,6 +301,8 @@ supabase.auth.onAuthStateChange((_event, session) => {
       ? "Signed in as " + currentUser.email
       : "Please sign in or create an account."
   );
+  
+  updateButton();
 });
 
 let model = null;
@@ -335,6 +339,12 @@ async function loadModel() {
 }
 
 function updateButton() {
+  $("analyse").disabled =
+    !currentUser ||
+    !model ||
+    !frontImage ||
+    !sideImage;
+}
   $("analyse").disabled = !(model && frontImage && sideImage);
 }
 
@@ -557,6 +567,11 @@ $("sidePhoto").addEventListener("change", e =>
 );
 
 $("analyse").addEventListener("click", () => {
+  if (!currentUser) {
+    showAccountStatus("Please sign in or create an account before analysing.");
+    return;
+  }
+
   if (!model || !frontImage || !sideImage) return;
   $("analyse").disabled = true;
   $("results").replaceChildren();
