@@ -199,58 +199,42 @@ function showAccountStatus(message) {
   $("accountStatus").textContent = message;
 }
 
+
 async function refreshAccount() {
-  const { data, error } = await supabase.auth.getUser();
+  showAccountStatus("Checking account status...");
 
-  currentUser = error ? null : data.user;
+  try {
+    const { data, error } = await supabase.auth.getUser();
 
-  $("signInButton").hidden = !!currentUser;
-  $("signUpButton").hidden = !!currentUser;
-  $("signOutButton").hidden = !currentUser;
-  $("accountEmail").hidden = !!currentUser;
-  $("accountPassword").hidden = !!currentUser;
+    if (error) {
+      console.error("Account check failed:", error);
+      currentUser = null;
+    } else {
+      currentUser = data.user;
+    }
 
-  showAccountStatus(
-    currentUser
-      ? "Signed in as " + currentUser.email
-      : "Please sign in or create an account."
-  );
-  
-  updateButton();
+    $("signInButton").hidden = !!currentUser;
+    $("signUpButton").hidden = !!currentUser;
+    $("signOutButton").hidden = !currentUser;
+    $("accountEmail").hidden = !!currentUser;
+    $("accountPassword").hidden = !!currentUser;
+
+    showAccountStatus(
+      currentUser
+        ? "Signed in as " + currentUser.email
+        : "Please sign in or create an account."
+    );
+  } catch (error) {
+    console.error("Account check error:", error);
+    currentUser = null;
+    showAccountStatus(
+      "Unable to check your account. Please refresh and try again."
+    );
+  } finally {
+    updateButton();
+  }
 }
 
-$("signUpButton").addEventListener("click", async () => {
-  const email = $("accountEmail").value.trim();
-  const password = $("accountPassword").value;
-
-  if (!email || password.length < 8) {
-    showAccountStatus(
-      "Enter your email and a password of at least 8 characters."
-    );
-    return;
-  }
-
-  showAccountStatus("Creating your account...");
-
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password
-  });
-
-  if (error) {
-    showAccountStatus("Sign-up failed: " + error.message);
-    return;
-  }
-
-  if (data.session) {
-    await refreshAccount();
-  } else {
-    showAccountStatus(
-      "Account request received. Check your email to confirm " +
-      "your account, then sign in."
-    );
-  }
-});
 
 $("signInButton").addEventListener("click", async () => {
   const email = $("accountEmail").value.trim();
