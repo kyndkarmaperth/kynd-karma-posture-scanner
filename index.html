@@ -151,6 +151,15 @@ button:disabled { opacity: .5; cursor: wait; }
 </main>
 
 <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const SUPABASE_URL = 'https://iaqonikluodqpxojneyf.supabase.co/rest/v1/';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_vpJX3xL3XqFTkqGBFWFlTg_raDkS773';
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 import {
   FilesetResolver,
   PoseLandmarker
